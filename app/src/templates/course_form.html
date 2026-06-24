@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <section class="page-header">
+    <div>
+      <h1>{{ form_title }}</h1>
+    </div>
+  </section>
+
+  <form method="post" class="form-grid">
+    <label>Course code<input type="text" name="course_code" value="{{ course.course_code or '' }}" required></label>
+    <label>Course name<input type="text" name="course_name" value="{{ course.course_name or '' }}" required></label>
+    <label>Credit hours<input type="number" name="credit_hours" min="1" max="6" value="{{ course.credit_hours or '' }}" required></label>
+    <label>Instructor name<input type="text" name="instructor_name" value="{{ course.instructor_name or '' }}" required></label>
+    <label>Department<input type="text" name="department" value="{{ course.department or '' }}" required></label>
+    <label>Semester
+      <select name="semester" required>
+        <option value="">Select semester</option>
+        {% for option in semesters %}
+          <option value="{{ option }}" {% if course.semester == option %}selected{% endif %}>{{ option }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Academic year<input type="number" name="academic_year" value="{{ course.academic_year or '' }}" required></label>
+
+    <div class="form-actions">
+      <button type="submit">Save</button>
+      <a class="button secondary" href="{{ url_for('courses') }}">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

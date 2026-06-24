@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <section class="page-header">
+    <div>
+      <h1>Courses</h1>
+      <p>View and manage course offerings.</p>
+    </div>
+    <a class="button" href="{{ url_for('course_add') }}">Add Course</a>
+  </section>
+
+  <table>
+    <thead><tr><th>ID</th><th>Code</th><th>Name</th><th>Department</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for course in courses %}
+        <tr>
+          <td>{{ course.course_id }}</td>
+          <td>{{ course.course_code }}</td>
+          <td>{{ course.course_name }}</td>
+          <td>{{ course.department }}</td>
+          <td class="actions">
+            <a href="{{ url_for('course_edit', course_id=course.course_id) }}">Edit</a>
+            <form method="post" action="{{ url_for('course_delete', course_id=course.course_id) }}" onsubmit="return confirm('Delete this course?');">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

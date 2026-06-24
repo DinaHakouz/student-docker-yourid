@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <section class="page-header">
+    <div>
+      <h1>Students</h1>
+      <p>Search, add, and manage student records.</p>
+    </div>
+    <a class="button" href="{{ url_for('student_add') }}">Add Student</a>
+  </section>
+
+  <form class="search-form" method="get">
+    <input type="text" name="search" placeholder="Search by name, ID, department" value="{{ search }}">
+    <button type="submit">Search</button>
+  </form>
+
+  <table>
+    <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for student in students %}
+        <tr>
+          <td>{{ student.student_id }}</td>
+          <td><a href="{{ url_for('student_detail', student_id=student.student_id) }}">{{ student.first_name }} {{ student.last_name }}</a></td>
+          <td>{{ student.department }}</td>
+          <td>{{ student.status }}</td>
+          <td class="actions">
+            <a href="{{ url_for('student_edit', student_id=student.student_id) }}">Edit</a>
+            <form method="post" action="{{ url_for('student_delete', student_id=student.student_id) }}" onsubmit="return confirm('Delete this student?');">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

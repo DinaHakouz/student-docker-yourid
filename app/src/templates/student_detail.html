@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <section class="page-header">
+    <div>
+      <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+      <p>Student details and enrollment history.</p>
+    </div>
+    <div class="button-group">
+      <a class="button" href="{{ url_for('student_edit', student_id=student.student_id) }}">Edit</a>
+      <a class="button secondary" href="{{ url_for('students') }}">Back to Students</a>
+    </div>
+  </section>
+
+  <div class="detail-grid">
+    <div><strong>Student ID</strong><span>{{ student.student_id }}</span></div>
+    <div><strong>National ID</strong><span>{{ student.national_id }}</span></div>
+    <div><strong>Email</strong><span>{{ student.email }}</span></div>
+    <div><strong>Date of birth</strong><span>{{ student.date_of_birth }}</span></div>
+    <div><strong>Gender</strong><span>{{ student.gender }}</span></div>
+    <div><strong>Department</strong><span>{{ student.department }}</span></div>
+    <div><strong>Enrollment date</strong><span>{{ student.enrollment_date }}</span></div>
+    <div><strong>GPA</strong><span>{{ student.gpa }}</span></div>
+    <div><strong>Status</strong><span>{{ student.status }}</span></div>
+  </div>
+
+  <section>
+    <h2>Enrollments</h2>
+    <table>
+      <thead><tr><th>Course</th><th>Grade</th><th>Letter</th><th>Enrolled At</th></tr></thead>
+      <tbody>
+        {% for enrollment in student_enrollments %}
+          <tr>
+            <td>{{ enrollment.course_code }} - {{ enrollment.course_name }}</td>
+            <td>{{ enrollment.grade or 'Pending' }}</td>
+            <td>{{ enrollment.letter_grade or '-' }}</td>
+            <td>{{ enrollment.enrolled_at }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

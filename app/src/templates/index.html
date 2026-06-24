@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <section class="hero">
+    <h1>Welcome to the Student Data Management System</h1>
+    <p>Use the menu to manage students, courses, and enrollments.</p>
+  </section>
+
+  <section class="cards">
+    <article class="card">
+      <h2>Students</h2>
+      <p>{{ students_count }} total</p>
+    </article>
+    <article class="card">
+      <h2>Courses</h2>
+      <p>{{ courses_count }} total</p>
+    </article>
+    <article class="card">
+      <h2>Enrollments</h2>
+      <p>{{ enrollments_count }} total</p>
+    </article>
+  </section>
+
+  <section class="grid-two">
+    <div>
+      <h3>Latest Students</h3>
+      <table>
+        <thead><tr><th>ID</th><th>Name</th><th>Status</th></tr></thead>
+        <tbody>
+          {% for student in recent_students %}
+            <tr>
+              <td>{{ student.student_id }}</td>
+              <td><a href="{{ url_for('student_detail', student_id=student.student_id) }}">{{ student.first_name }} {{ student.last_name }}</a></td>
+              <td>{{ student.status }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Latest Courses</h3>
+      <table>
+        <thead><tr><th>Code</th><th>Name</th><th>Credits</th></tr></thead>
+        <tbody>
+          {% for course in recent_courses %}
+            <tr>
+              <td>{{ course.course_code }}</td>
+              <td>{{ course.course_name }}</td>
+              <td>{{ course.credit_hours }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h3>Recent Enrollments</h3>
+    <table>
+      <thead><tr><th>ID</th><th>Student</th><th>Course</th><th>Grade</th></tr></thead>
+      <tbody>
+        {% for enrollment in recent_enrollments %}
+          <tr>
+            <td>{{ enrollment.enrollment_id }}</td>
+            <td>{{ enrollment.first_name }} {{ enrollment.last_name }}</td>
+            <td>{{ enrollment.course_code }}</td>
+            <td>{{ enrollment.grade or 'Pending' }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}
